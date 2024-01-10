@@ -27,7 +27,7 @@ include_once("config.php");
         <div class="row justify-content-center">
             <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-8">
                 <h1 class="mb-3">Feedback</h1>
-                <form action="" method="post">
+                <form action="action.php" method="post">
                     <label class="form-label" for="faculty">Select Faculty</label>
                     <select class="form-select mb-3" name="faculty" id="faculty">
                         <?php

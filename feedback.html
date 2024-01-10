@@ -13,31 +13,35 @@
     <nav class="navbar bg-body-tertiary">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET" >
+                <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET">
             </a>
             <button class="btn btn-warning">Login</button>
         </div>
     </nav>
 
-    <div class="container col-4 mt-5">
-        <h1 class="mb-3">Feedback</h1>
-        <form action="" method="post">
-            <label class="form-label" for="faculty">Select Faculty</label>
-            <select class="form-select mb-3" name="faculty" id="faculty">
-                <option value="1">Kumar</option>
-                <option value="2">Raj</option>
-            </select>
-            <label class="form-label" for="student">Select Student</label>
-            <select class="form-select mb-3" name="student" id="student">
-                <option value="1">Hemasundar</option>
-                <option value="2">Mathan Raj</option>
-            </select>
-            <label class="form-label" for="date">Date</label>
-            <input class="form-control mb-3" type="date" name="date" id="date">
-            <label class="form-label" for="feedback">Feedback</label>
-            <input class="form-control mb-3" type="text" name="feedback" id="feedback">
-            <input type="submit" class="btn btn-warning">
-        </form>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-8">
+                <h1 class="mb-3">Feedback</h1>
+                <form action="" method="post">
+                    <label class="form-label" for="faculty">Select Faculty</label>
+                    <select class="form-select mb-3" name="faculty" id="faculty">
+                        <option value="1">Kumar</option>
+                        <option value="2">Raj</option>
+                    </select>
+                    <label class="form-label" for="student">Select Student</label>
+                    <select class="form-select mb-3" name="student" id="student">
+                        <option value="1">Hemasundar</option>
+                        <option value="2">Mathan Raj</option>
+                    </select>
+                    <label class="form-label" for="date">Date</label>
+                    <input class="form-control mb-3" type="date" name="date" id="date">
+                    <label class="form-label" for="feedback">Feedback</label>
+                    <input class="form-control mb-3" type="text" name="feedback" id="feedback">
+                    <input type="submit" class="btn btn-warning">
+                </form>
+            </div>
+        </div>
     </div>
     <script>
         var date = new Date();

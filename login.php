@@ -1,6 +1,3 @@
-<?php
-include_once("config.php");
-?>
 
 <!doctype html>
 <html lang="en">
@@ -27,13 +24,15 @@ include_once("config.php");
             <div class="card mt-5 col-lg-4">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Mentoring Portal</h5>
-                    <label for="username" class="form-label mt-3">Username</label>
-                    <input type="text" class="form-control mb-3" name="username" id="username">
+                    <form action="loginvalidation.php" method="post">
+                        <label for="username" class="form-label mt-3">Username</label>
+                        <input type="text" class="form-control mb-3" name="username" id="username">
 
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control mb-3" name="password" id="password">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control mb-3" name="password" id="password">
 
-                    <input type="submit" value="LOGIN" class="btn btn-warning">
+                        <input type="submit" value="LOGIN" class="btn btn-warning">
+                    </form>
                 </div>
 
             </div>

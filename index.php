@@ -1,3 +1,7 @@
+<?php
+    include_once("config.php");
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -26,8 +30,19 @@
                 <form action="" method="post">
                     <label class="form-label" for="faculty">Select Faculty</label>
                     <select class="form-select mb-3" name="faculty" id="faculty">
-                        <option value="1">Kumar</option>
-                        <option value="2">Raj</option>
+                        <?php 
+                            $sql = "SELECT * FROM staff";
+                            $stmt = $dbh->prepare($sql);                            
+                            $stmt->execute();   
+                            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            if ($result) {
+                                foreach ($result as $row) {
+                                    echo "<option value='".$row['ID']."'>".$row['name']."</option>";
+                                }
+                            } else {
+                                echo "<option value=''>No staff found</option>";
+                            }
+                        ?>
                     </select>
                     <label class="form-label" for="student">Select Student</label>
                     <select class="form-select mb-3" name="student" id="student">

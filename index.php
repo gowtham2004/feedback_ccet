@@ -1,5 +1,5 @@
 <?php
-    include_once("config.php");
+include_once("config.php");
 ?>
 
 <!doctype html>
@@ -30,24 +30,35 @@
                 <form action="" method="post">
                     <label class="form-label" for="faculty">Select Faculty</label>
                     <select class="form-select mb-3" name="faculty" id="faculty">
-                        <?php 
-                            $sql = "SELECT * FROM staff";
-                            $stmt = $dbh->prepare($sql);                            
-                            $stmt->execute();   
-                            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                            if ($result) {
-                                foreach ($result as $row) {
-                                    echo "<option value='".$row['ID']."'>".$row['name']."</option>";
-                                }
-                            } else {
-                                echo "<option value=''>No staff found</option>";
+                        <?php
+                        $sql = "SELECT * FROM staff";
+                        $stmt = $dbh->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        if ($result) {
+                            foreach ($result as $row) {
+                                echo "<option value='" . $row['ID'] . "'>" . $row['name'] . "</option>";
                             }
+                        } else {
+                            echo "<option value=''>No staff found</option>";
+                        }
                         ?>
                     </select>
                     <label class="form-label" for="student">Select Student</label>
                     <select class="form-select mb-3" name="student" id="student">
-                        <option value="1">Hemasundar</option>
-                        <option value="2">Mathan Raj</option>
+                        <?php
+                        $sql = "SELECT * FROM student";
+                        $stmt = $dbh->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        if ($result) {
+                            foreach ($result as $row) {
+                                echo "<option value='" . $row['ID'] . "'>" . $row['name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No student found</option>";
+                        }
+                        ?>
                     </select>
                     <label class="form-label" for="date">Date</label>
                     <input class="form-control mb-3" type="date" name="date" id="date">

@@ -7,11 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $date = $_POST["date"];
     $feedback = $_POST["feedback"];
 
-    echo $faculty;
-    echo $student;
-    echo $date;
-    echo $feedback;
-
     try {
         $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, feedback) VALUES (:studentid, :staffid, :feedback)");
         $stmt->bindParam(':studentid', $student);
@@ -19,7 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':feedback', $feedback);
         $stmt->execute();
     
-        echo "Data inserted successfully!";
+        echo "<script>
+        alert('Feedback added.');
+        window.location.href = 'index.php';
+        </script>";
+        // header("location:index.php");
     } catch (PDOException $e) {
         die("Error: " . $e->getMessage());
     }

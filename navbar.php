@@ -1,3 +1,10 @@
+<?php
+function isActive($page)
+{
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    return ($currentPage === $page) ? 'active' : '';
+}
+?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
@@ -15,10 +22,10 @@
 
             <ul class="ms-3 navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="ms-3 nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                    <a class="nav-link <?php echo isActive('index.php');?>"  aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="ms-3 nav-item">
-                    <a class="nav-link" href="report.php">Report</a>
+                    <a class="nav-link <?php echo isActive('report.php');?>"  href="report.php">Report</a>
                 </li>
             </ul>
             <div class="d-flex">

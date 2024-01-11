@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 10, 2024 at 04:09 PM
+-- Generation Time: Jan 11, 2024 at 04:27 AM
 -- Server version: 5.7.40
 -- PHP Version: 8.2.0
 
@@ -34,16 +34,21 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `staffid` int(11) NOT NULL DEFAULT '0',
   `feedback` text NOT NULL,
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `remarks` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`ID`, `studentid`, `staffid`, `feedback`, `insertat`) VALUES
-(1, 1, 1, 'good', '2024-01-10 13:20:45'),
-(2, 1, 1, '123', '2024-01-10 13:20:45');
+INSERT INTO `feedback` (`ID`, `studentid`, `staffid`, `feedback`, `insertat`, `remarks`) VALUES
+(1, 3, 3, 'Excellent', '2024-01-11 04:24:47', ''),
+(2, 4, 3, 'Excellent', '2024-01-11 04:24:47', ''),
+(3, 6, 3, 'Excellent', '2024-01-11 04:24:47', ''),
+(4, 3, 3, 'Very Bad', '2024-01-11 04:25:29', 'testing 067'),
+(5, 4, 3, 'Excellent', '2024-01-11 04:25:29', ''),
+(6, 6, 3, 'Excellent', '2024-01-11 04:25:29', '');
 
 -- --------------------------------------------------------
 
@@ -97,10 +102,10 @@ CREATE TABLE IF NOT EXISTS `student` (
 INSERT INTO `student` (`ID`, `rollno`, `photo`, `name`, `dept`, `mentorid`, `insertat`) VALUES
 (1, '21cs062', './student.jpg', 'justien', 'cse', 1, '2024-01-10 08:56:34'),
 (2, '21ee078', './student.jpg', 'robert', 'eee', 2, '2024-01-10 08:56:52'),
-(3, '21cs067', './student.jpg', 'shabby', 'cse', 0, '2024-01-10 08:57:17'),
-(4, '21ee080', './student.jpg', 'stephen', 'eee', 0, '2024-01-10 08:57:35'),
+(3, '21cs067', './student.jpg', 'shabby', 'cse', 3, '2024-01-10 08:57:17'),
+(4, '21ee080', './student.jpg', 'stephen', 'eee', 3, '2024-01-10 08:57:35'),
 (5, '21ec090', './student.jpg', 'richart', 'ece', 1, '2024-01-10 08:57:50'),
-(6, '21cs080', './student.jpg', 'graven', 'cse', 0, '2024-01-10 08:58:15'),
+(6, '21cs080', './student.jpg', 'graven', 'cse', 3, '2024-01-10 08:58:15'),
 (7, '21me070', './student.jpg', 'stark', 'mech', 2, '2024-01-10 08:58:30'),
 (8, '21cs090', './student.jpg', 'robin', 'cse', 1, '2024-01-10 08:58:47'),
 (9, '21me091', './student.jpg', 'louis', 'mech', 2, '2024-01-10 08:59:22'),

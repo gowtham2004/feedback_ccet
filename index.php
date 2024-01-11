@@ -17,22 +17,21 @@ if (isset($_SESSION["faculty_id"])) {
     </head>
 
     <body>
-        <nav class="navbar fixed-top bg-body-tertiary">
+        <?php include_once("navbar.php"); ?>
+
+        <!-- <nav class="navbar fixed-top bg-body-tertiary">
             <div class="container-fluid">
-                
+
                 <a class="navbar-brand" href="#">
                     <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET">
                 </a>
-                <span class="navbar-text">
-                    <?php echo "Welcome " . $_SESSION["name"]; ?>
-                </span>
                 <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out"></i> LogOut</a>
             </div>
-        </nav>
+        </nav> -->
 
-        <div class="container" style="margin-top:85px;">
+        <div class="container">
             <div class="row justify-content-center">
-                <h2>Mentoring Feedback</h2>
+                <h2 class="mt-3 mb-3 col-lg-5 text-center">Mentoring Feedback</h2>
                 <?php
                 $stmt = $dbh->prepare("SELECT * FROM student where mentorid=:mentorid");
                 $stmt->bindParam(':mentorid', $_SESSION["faculty_id"]);
@@ -48,18 +47,20 @@ if (isset($_SESSION["faculty_id"])) {
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <img src="<?php echo $row['photo']; ?>" alt="<?php $row['photo']; ?>" height="150">
                                 </div>
-                                <div class="col-lg-2 col-md-3 col-sm-6">
-                                    <br><br>
+                                <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+
                                     <h5>
                                         <?php echo $row['rollno']; ?>
+                                    </h5>
+                                    <h5>
+                                        <?php echo $row['dept']; ?>
                                     </h5>
                                     <h6>
                                         <?php echo $row['name']; ?>
                                     </h6>
                                 </div>
-                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                <!-- <div class="col-lg-2 col-md-3 col-sm-6">
                                     <br><br>
-                                    <!-- select menu -->
                                     <select class="form-select" name="feedback<?php echo $row["ID"]; ?>">
                                         <option>Excellent</option>
                                         <option>Good</option>
@@ -67,10 +68,11 @@ if (isset($_SESSION["faculty_id"])) {
                                         <option>Bad</option>
                                         <option>Very Bad</option>
                                     </select>
-                                </div>
-                                <div class="col-lg-2 col-md-3 col-sm-6">
-                                    <br><br>
-                                    <input type="text" class="form-control" name="remark<?php echo $row["ID"]; ?>" placeholder="Remarks">
+                                </div> -->
+                                <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
+                                    <label for="remark<?php echo $row["ID"]; ?>" class="form-label">Remarks</label>
+                                    <textarea class="form-control" rows=3 name="remark<?php echo $row["ID"]; ?>"
+                                        placeholder="Remarks" oninput="validateInput(this)"></textarea>
                                 </div>
                                 <hr class="my-4">
                             </div>
@@ -91,6 +93,11 @@ if (isset($_SESSION["faculty_id"])) {
 
             </div>
         </div>
+        <script>
+            function validateInput(textarea) {
+                textarea.value = textarea.value.replace(/[^a-zA-Z0-9.,? ]/g, '');
+            }
+        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

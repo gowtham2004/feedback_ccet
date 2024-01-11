@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION["faculty_id"])) {
-    header("location:index.php");
+    header("location:logout.php");
 }
 ?>
 <!doctype html>
@@ -16,14 +16,9 @@ if (isset($_SESSION["faculty_id"])) {
 </head>
 
 <body>
-    <nav class="navbar bg-body-tertiary">
-        <div class="container">
-            <a class="navbar-brand" href="https://www.chettinadtech.ac.in">
-                <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET">
-            </a>
-        </div>
-
-    </nav>
+    <?php 
+    include_once("navbar.php");
+    ?>
     <div class="container">
         <div class=" row justify-content-center">
             <div class="card mt-5 col-lg-4">

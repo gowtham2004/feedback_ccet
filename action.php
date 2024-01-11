@@ -13,13 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             foreach ($result as $row) {
                 $studentid = $row["ID"];
                 $staffid = $_SESSION["faculty_id"];
-                $feedback = $_POST["feedback" . $row["ID"]];
+                // $feedback = $_POST["feedback" . $row["ID"]];
                 $remarks = $_POST["remark" . $row["ID"]];
 
-                $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, feedback, remarks) VALUES (:studentid, :staffid, :feedback, :remarks)");
+                $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
                 $stmt->bindParam(':studentid', $studentid);
                 $stmt->bindParam(':staffid', $staffid);
-                $stmt->bindParam(':feedback', $feedback);
+                // $stmt->bindParam(':feedback', $feedback);
                 $stmt->bindParam(':remarks', $remarks);
                 $stmt->execute();
 

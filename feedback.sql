@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 11, 2024 at 04:27 AM
+-- Generation Time: Jan 11, 2024 at 07:09 AM
 -- Server version: 5.7.40
 -- PHP Version: 8.2.0
 
@@ -32,23 +32,19 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `studentid` int(11) NOT NULL DEFAULT '0',
   `staffid` int(11) NOT NULL DEFAULT '0',
-  `feedback` text NOT NULL,
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remarks` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `feedback`
 --
 
-INSERT INTO `feedback` (`ID`, `studentid`, `staffid`, `feedback`, `insertat`, `remarks`) VALUES
-(1, 3, 3, 'Excellent', '2024-01-11 04:24:47', ''),
-(2, 4, 3, 'Excellent', '2024-01-11 04:24:47', ''),
-(3, 6, 3, 'Excellent', '2024-01-11 04:24:47', ''),
-(4, 3, 3, 'Very Bad', '2024-01-11 04:25:29', 'testing 067'),
-(5, 4, 3, 'Excellent', '2024-01-11 04:25:29', ''),
-(6, 6, 3, 'Excellent', '2024-01-11 04:25:29', '');
+INSERT INTO `feedback` (`ID`, `studentid`, `staffid`, `insertat`, `remarks`) VALUES
+(1, 3, 3, '2024-01-11 06:26:08', 'trtUKYVKGVKHJJhvkusvuyg7x6tuyxv'),
+(2, 4, 3, '2024-01-11 06:26:08', 'ygydvkhwbkdbhwkugvukdvkwhjbduyv'),
+(3, 6, 3, '2024-01-11 06:26:08', 'yugduygxukwvdukwvkdg');
 
 -- --------------------------------------------------------
 
@@ -61,11 +57,11 @@ CREATE TABLE IF NOT EXISTS `staff` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '0',
   `username` varchar(50) NOT NULL,
-  `password` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL DEFAULT '$2y$10$nOP3MM04pvirwJwN.F.2KuhYfOikJQxWuXtZtX2F5nxR9dAdcecfy',
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `staff`

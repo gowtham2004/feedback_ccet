@@ -60,6 +60,8 @@ try {
     <title>Feedback Entries</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <style>
         ul {
             list-style-type: none;
@@ -146,9 +148,19 @@ try {
             </div>
         </div>
         <div class="container mt-3">
-            <h2>Student Search</h2>
-            <label for="searchInput">Search by Name:</label>
-            <input type="text" id="searchInput" oninput="filterStudents()">
+            <h2 class="text-center">Students</h2>
+
+            <div class="row justify-content-end">
+                
+                <div class="col-3">
+                    <label for="searchInput" class="form-label">Search by Name:</label>
+                    <input type="text" id="searchInput" class="form-control"
+                        placeholder="<i class='fa fa-search'></i> Search" oninput="filterStudents()">
+
+                </div>
+
+            </div>
+
             <div class="container">
                 <div class="row">
                     <div id="studentContainer">
@@ -243,44 +255,44 @@ try {
         </div>
 
         <script>
-        // Sample student data (replace with actual data from your database)
-        const students = [
-            <?php
-            $id = $_SESSION['faculty_id'];
-            $sql = "SELECT * FROM student WHERE mentorid=:id";
-            $stmt = $dbh->prepare($sql);
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($result as $row) { ?>
-                , {
-                    ID: '<?php echo ($row['ID']) ?>',
-                    name: '<?php echo ($row['name']) ?>',
-                    rollno: '<?php echo ($row['rollno']) ?>',
-                    dept: '<?php echo ($row['dept']) ?>',
-                    photo: '<?php echo ($row['photo']) ?>'
-                },
-            <?php } ?>
-        ];
+            // Sample student data (replace with actual data from your database)
+            const students = [
+                <?php
+                $id = $_SESSION['faculty_id'];
+                $sql = "SELECT * FROM student WHERE mentorid=:id";
+                $stmt = $dbh->prepare($sql);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($result as $row) { ?>
+                    , {
+                        ID: '<?php echo ($row['ID']) ?>',
+                        name: '<?php echo ($row['name']) ?>',
+                        rollno: '<?php echo ($row['rollno']) ?>',
+                        dept: '<?php echo ($row['dept']) ?>',
+                        photo: '<?php echo ($row['photo']) ?>'
+                    },
+                <?php } ?>
+            ];
 
-        // Function to filter students based on the search input
-        function filterStudents() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const studentContainer = document.getElementById('studentContainer');
+            // Function to filter students based on the search input
+            function filterStudents() {
+                const searchInput = document.getElementById('searchInput').value.toLowerCase();
+                const studentContainer = document.getElementById('studentContainer');
 
-            // Clear existing student entries
-            studentContainer.innerHTML = '';
+                // Clear existing student entries
+                studentContainer.innerHTML = '';
 
-            // Filter students based on the search input
-            const filteredStudents = students.filter(student => student.name.toLowerCase().includes(searchInput) || student.rollno.toLowerCase().includes(searchInput));
+                // Filter students based on the search input
+                const filteredStudents = students.filter(student => student.name.toLowerCase().includes(searchInput) || student.rollno.toLowerCase().includes(searchInput));
 
-            // Display filtered students
-            filteredStudents.forEach(student => {
-                const studentEntry = document.createElement('div');
-                studentEntry.className = 'student-entry';
+                // Display filtered students
+                filteredStudents.forEach(student => {
+                    const studentEntry = document.createElement('div');
+                    studentEntry.className = 'student-entry';
 
-                // Add text content
-                studentEntry.innerHTML += `
+                    // Add text content
+                    studentEntry.innerHTML += `
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         <img src="${student.photo}" alt="${student.photo}" height="150">
@@ -303,20 +315,21 @@ try {
                             View Report
                         </button>
                     </div>
+                    <hr class="my-4">
                 </div>
                 `;
 
-                studentContainer.appendChild(studentEntry);
-            });
-        }
+                    studentContainer.appendChild(studentEntry);
+                });
+            }
 
-        // Initial display of all students
-        filterStudents();
-    </script>
+            // Initial display of all students
+            filterStudents();
+        </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 
 </body>
 

@@ -155,7 +155,7 @@ try {
                 <div class="col-3">
                     <label for="searchInput" class="form-label">Search by Name:</label>
                     <input type="text" id="searchInput" class="form-control"
-                        placeholder="<i class='fa fa-search'></i> Search" oninput="filterStudents()">
+                        placeholder="Search using Name or Roll No." oninput="filterStudents()">
 
                 </div>
 

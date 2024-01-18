@@ -94,22 +94,6 @@ try {
             background-color: #2ecc71;
             /* Green */
         }
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-
-        .student-entry {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        img {
-            width: 150px;
-            border-radius: 8px;
-        }
     </style>
 </head>
 

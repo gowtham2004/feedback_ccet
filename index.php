@@ -44,7 +44,7 @@ if (isset($_SESSION["faculty_id"])) {
                         foreach ($result as $row) {
                             ?>
                             <div class="row justify-content-center">
-                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                <div class="col-lg-2 col-md-3 col-sm-6 align-self-center">
                                     <img src="<?php echo $row['photo']; ?>" alt="<?php $row['photo']; ?>" height="150">
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">

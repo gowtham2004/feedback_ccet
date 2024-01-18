@@ -84,6 +84,7 @@ session_start();
 
                 // Add text content
                 studentEntry.innerHTML += `
+                
           
         `;
 

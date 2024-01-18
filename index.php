@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("config.php");
+
 if (isset($_SESSION["faculty_id"])) {
     ?>
 
@@ -19,85 +20,102 @@ if (isset($_SESSION["faculty_id"])) {
     <body>
         <?php include_once("navbar.php"); ?>
 
-        <!-- <nav class="navbar fixed-top bg-body-tertiary">
-            <div class="container-fluid">
-
-                <a class="navbar-brand" href="#">
-                    <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET">
-                </a>
-                <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out"></i> LogOut</a>
-            </div>
-        </nav> -->
-
         <div class="container" style="margin-top: 70px">
             <div class="row justify-content-center">
                 <h2 class="mt-3 mb-3 col-lg-5 text-center">Mentoring Feedback</h2>
+
                 <?php
-                $stmt = $dbh->prepare("SELECT * FROM student where mentorid=:mentorid");
+                // Fetch all students for the faculty
+                $stmt = $dbh->prepare("SELECT * FROM student WHERE mentorid=:mentorid");
                 $stmt->bindParam(':mentorid', $_SESSION["faculty_id"]);
                 $stmt->execute();
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                if ($result) {
-                    ?>
-                    <form action="action.php" method="post">
-                        <?php
-                        foreach ($result as $row) {
-                            ?>
-                            <div class="row justify-content-center">
-                                <div class="col-lg-2 col-md-3 col-sm-6 align-self-center">
-                                    <img src="<?php echo $row['photo']; ?>" alt="<?php $row['photo']; ?>" height="150">
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+                $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                                    <h5>
-                                        <?php echo $row['rollno']; ?>
-                                    </h5>
-                                    <h5>
-                                        <?php echo $row['dept']; ?>
-                                    </h5>
-                                    <h6>
-                                        <?php echo $row['name']; ?>
-                                    </h6>
-                                </div>
-                                <!-- <div class="col-lg-2 col-md-3 col-sm-6">
-                                    <br><br>
-                                    <select class="form-select" name="feedback<?php echo $row["ID"]; ?>">
-                                        <option>Excellent</option>
-                                        <option>Good</option>
-                                        <option>Average</option>
-                                        <option>Bad</option>
-                                        <option>Very Bad</option>
-                                    </select>
-                                </div> -->
-                                <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
-                                    <label for="remark<?php echo $row["ID"]; ?>" class="form-label">Remarks</label>
-                                    <textarea class="form-control" rows=3 name="remark<?php echo $row["ID"]; ?>"
-                                        placeholder="Remarks" oninput="validateInput(this)"></textarea>
-                                </div>
-                                <hr class="my-4">
-                            </div>
-                            <?php
-                        }
-                        ?>
-                        <div class="d-grid gap-2 mx-auto col-2 m-5">
-                            <input type="submit" class="btn btn-warning btn-lg mb-5">
+                if ($students) {
+                    ?>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 col-sm-8 mb-3">
+                            <label for="studentSelect" class="form-label">Select Student:</label>
+                            <select class="form-select" name="studentSelect" id="studentSelect" onchange="displayStudentInfo()">
+                                <option value="" selected disabled>Select Student</option>
+                                <?php
+                                foreach ($students as $student) {
+                                    echo "<option value='{$student['ID']}'>{$student['rollno']} - {$student['name']}</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
-                    </form>
+                    </div>
+                    <?php
+                    foreach ($students as $student) {
+                        ?>
+                        <div class="student-info" id="student<?php echo $student['ID']; ?>" style="display: none;">
+                            <form action="">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-2 col-md-3 col-sm-6 align-self-center">
+                                        <img src="<?php echo $student['photo']; ?>" alt="<?php $student['photo']; ?>" height="150">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+                                        <h5>
+                                            <?php echo $student['rollno']; ?>
+                                        </h5>
+                                        <h5>
+                                            <?php echo $student['dept']; ?>
+                                        </h5>
+                                        <h6>
+                                            <?php echo $student['name']; ?>
+                                        </h6>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
+                                        <label for="remark<?php echo $student["ID"]; ?>" class="form-label">Remarks</label>
+                                        <textarea class="form-control" rows=3 name="remark<?php echo $student["ID"]; ?>"
+                                            placeholder="Remarks" oninput="validateInput(this)"></textarea>
+                                    </div>
+                                    <!-- <hr class="my-4"> -->
+                                </div>
+                                <div class="d-grid gap-2 mx-auto col-2 m-5">
+                                    <input type="submit" class="btn btn-warning btn-lg mb-5">
+                                </div>
+                            </form>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+
+
+                    <script>
+                        function displayStudentInfo() {
+                            var studentId = document.getElementById("studentSelect").value;
+
+                            var studentDivs = document.querySelectorAll('.student-info');
+                            console.log(studentDivs);
+                            studentDivs.forEach(function (div) {
+                                div.style.display = 'none';
+                            });
+
+
+                            if (studentId !== "") {
+                                // Display the selected student div
+                                var selectedStudentDiv = document.getElementById("student" + studentId);
+                                if (selectedStudentDiv) {
+                                    selectedStudentDiv.style.display = "block";
+                                }
+                            }
+                        }
+
+                        function validateInput(textarea) {
+                            textarea.value = textarea.value.replace(/[^a-zA-Z0-9.,? ]/g, '');
+                        }
+                    </script>
+
                     <?php
                 } else {
-                    echo "<option value=''>No student found</option>";
+                    echo "<p>No students found for mentoring.</p>";
                 }
                 ?>
-
-                <img src="" alt="">
-
             </div>
         </div>
-        <script>
-            function validateInput(textarea) {
-                textarea.value = textarea.value.replace(/[^a-zA-Z0-9.,? ]/g, '');
-            }
-        </script>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -106,6 +124,7 @@ if (isset($_SESSION["faculty_id"])) {
 
     </html>
     <?php
-} else
+} else {
     header("location:login.php");
+}
 ?>

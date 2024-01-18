@@ -12,7 +12,7 @@ function isActive($page)
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="./">
                 <img src="https://www.chettinadtech.ac.in/assets/images/CCET_Logo.png" alt="Chettinad CET">
             </a>
 

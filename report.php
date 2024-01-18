@@ -146,168 +146,173 @@ try {
             </div>
         </div>
         <div class="container mt-3">
+            <h2>Student Search</h2>
+            <label for="searchInput">Search by Name:</label>
+            <input type="text" id="searchInput" oninput="filterStudents()">
+            <div class="container">
+                <div class="row">
+                    <div id="studentContainer">
+                        <!-- Student entries will be dynamically added here -->
+                    </div>
+                    <?php
+                    $id = $_SESSION['faculty_id'];
+                    $sql = "SELECT * FROM student WHERE mentorid=:id";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($result as $row) {
+                        ?>
+                        <div class="modal fade" id="modal<?php echo $row["ID"]; ?>" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                            <?php echo $row["name"]; ?>
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-6" style="border-right: 1px solid #ddd;">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-4">
+                                                        <img src="<?php echo $row['photo']; ?>"
+                                                            alt="<?php $row['photo']; ?>" height="150">
+                                                    </div>
+                                                    <div class="col-3 justify-content-center align-self-center">
+                                                        <h5>
+                                                            <?php echo $row['rollno']; ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <?php echo $row['dept']; ?>
+                                                        </h5>
+                                                        <h6>
+                                                            <?php echo $row['name']; ?>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 overflow-y-auto" style="max-height:600px;">
+                                                <h3 class="mb-3">Report</h3>
 
-            <form action="" method="post">
+                                                <?php
+
+                                                $q = "SELECT * FROM feedback WHERE studentid=:id";
+                                                $stmt = $dbh->prepare($q);
+                                                $stmt->bindParam(':id', $row["ID"], PDO::PARAM_INT);
+                                                $stmt->execute();
+                                                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($res as $r) {
+                                                    // echo "<h3>".$r["remarks"]."</h3>";
+                                                    ?>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <h5>
+                                                                <?php
+                                                                $dt = date('j M Y', strtotime($r["insertat"]));
+                                                                echo $dt;
+                                                                ?>
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <?php echo $r["remarks"]; ?>
+                                                        </div>
+                                                        <hr class="my-1 mb-1">
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <!-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        // Sample student data (replace with actual data from your database)
+        const students = [
+            <?php
+            $id = $_SESSION['faculty_id'];
+            $sql = "SELECT * FROM student WHERE mentorid=:id";
+            $stmt = $dbh->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($result as $row) { ?>
+                , {
+                    ID: '<?php echo ($row['ID']) ?>',
+                    name: '<?php echo ($row['name']) ?>',
+                    rollno: '<?php echo ($row['rollno']) ?>',
+                    dept: '<?php echo ($row['dept']) ?>',
+                    photo: '<?php echo ($row['photo']) ?>'
+                },
+            <?php } ?>
+        ];
+
+        // Function to filter students based on the search input
+        function filterStudents() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const studentContainer = document.getElementById('studentContainer');
+
+            // Clear existing student entries
+            studentContainer.innerHTML = '';
+
+            // Filter students based on the search input
+            const filteredStudents = students.filter(student => student.name.toLowerCase().includes(searchInput) || student.rollno.toLowerCase().includes(searchInput));
+
+            // Display filtered students
+            filteredStudents.forEach(student => {
+                const studentEntry = document.createElement('div');
+                studentEntry.className = 'student-entry';
+
+                // Add text content
+                studentEntry.innerHTML += `
                 <div class="row justify-content-center">
-                    <div class="mb-3 col-lg-4">
-                        <label for="selectedDate" class="form-label">Select a Date:</label>
-                        <select name="selectedDate" id="selectedDate" class="form-select">
-                            <option value="all">All</option>
-                            <?php foreach ($availableDates as $date): ?>
-                                <option value="<?= $date['date'] ?>">
-                                    <?= date('j M Y', strtotime($date['date'])) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <img src="${student.photo}" alt="${student.photo}" height="150">
                     </div>
-                    <div class="mb-3 col-lg-4">
-                        <label for="searchStudentName" class="form-label">Search Student Name:</label>
-                        <input type="text" name="searchStudentName" id="searchStudentName" class="form-control"
-                            placeholder="Enter student name">
+                    <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+
+                        <h5>
+                        ${student.rollno}
+                        </h5>
+                        <h5>
+                        ${student.dept}
+                        </h5>
+                        <h6>
+                        ${student.name}
+                        </h6>
                     </div>
-                    <div class="col-lg-2 mt-lg-4 p-2">
-                        <button type="submit" class="btn btn-warning">Show Entries</button>
+                    <div class="col-lg-2 col-md-2 col-sm-3 align-self-center">
+                        <button class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#modal${student.ID}">
+                            View Report
+                        </button>
                     </div>
                 </div>
-            </form>
+                `;
 
+                studentContainer.appendChild(studentEntry);
+            });
+        }
 
-            <?php
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $selectedDate = isset($_POST['selectedDate']) ? $_POST['selectedDate'] : 'all';
-                $searchStudentName = isset($_POST['searchStudentName']) ? $_POST['searchStudentName'] : '';
-
-                // Fetch entries based on the selected date and search student name
-                if ($selectedDate !== 'all') {
-                    $formattedDate = date('Y-m-d', strtotime($selectedDate));
-                    $sql = "SELECT student.id as ID, student.photo as photo, student.rollno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
-                    FROM feedback
-                    INNER JOIN student ON student.ID = feedback.studentid
-                    WHERE feedback.staffid = :mentorid
-                    AND DATE(feedback.insertat) = :selectedDate
-                    AND student.name LIKE :searchStudentName
-                    ORDER BY feedback.insertat DESC";
-                }
-
-                //Fetch All entries
-                else {
-                    $availableDates = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    // Fetch all entries regardless of the date
-                    $sqlAllEntries = "SELECT student.id as ID, student.photo as photo, student.rollno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
-                    FROM feedback
-                    INNER JOIN student ON student.ID = feedback.studentid
-                    WHERE feedback.staffid = :mentorid AND student.name LIKE :searchStudentName
-                    ORDER BY feedback.insertat DESC";
-
-                    $stmtAllEntries = $dbh->prepare($sqlAllEntries);
-                    $stmtAllEntries->bindValue(':searchStudentName', "%$searchStudentName%", PDO::PARAM_STR);
-                    $stmtAllEntries->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
-                    $stmtAllEntries->execute();
-
-                    // Fetch all entries
-                    $allEntries = $stmtAllEntries->fetchAll(PDO::FETCH_ASSOC);
-
-                    // Organize all entries into groups based on date
-                    $groupedAllEntries = [];
-                    foreach ($allEntries as $entry) {
-                        $date = date('j M Y', strtotime($entry['insertat']));
-                        $groupedAllEntries[$date][] = $entry;
-                    }
-                    // Display all entries grouped by date
-                    echo "<h2 class='mt-4'>All Entries</h2>";
-                    foreach ($groupedAllEntries as $date => $entries) {
-                        echo "<h3 class='mt-3'>$date</h3>";
-                        echo "<ul class='mb-4'>";
-                        foreach ($entries as $entry) { ?>
-                            <div class="row justify-content-center">
-                                <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <img src="<?php echo $entry['photo']; ?>" alt="<?php $entry['photo']; ?>" height="150">
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
-
-                                    <h5>
-                                        <?php echo $entry['rollno']; ?>
-                                    </h5>
-                                    <h5>
-                                        <?php echo $entry['dept']; ?>
-                                    </h5>
-                                    <h6>
-                                        <?php echo $entry['name']; ?>
-                                    </h6>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
-                                    <label for="remark<?php echo $entry["ID"]; ?>" class="form-label">Remarks</label>
-                                    <textarea class="form-control" rows="3" readonly><?php
-                                    if (strlen($entry['remarks']) == 0) {
-                                        echo ("none");
-                                    } else {
-                                        echo ($entry['remarks']);
-                                    }
-                                    ?></textarea>
-                                </div>
-                                <hr class="my-4">
-                            </div>
-                        <?php }
-                        echo "</ul>";
-                    }
-                    return;
-                }
-
-                $stmt = $dbh->prepare($sql);
-                $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
-                $stmt->bindParam(':selectedDate', $formattedDate, PDO::PARAM_STR);
-                $stmt->bindValue(':searchStudentName', "%$searchStudentName%", PDO::PARAM_STR);
-                $stmt->execute();
-
-                // Fetch the entries for the selected date and search student name
-                $filteredEntries = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                // Display the entries for the selected date and search student name
-                echo "<h2 class='mt-4'>";
-                echo "Entries for " . date('j M Y', strtotime($selectedDate));
-                echo "</h2>";
-                echo "<ul class='mb-4'>";
-                foreach ($filteredEntries as $entry) { ?>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-3 col-md-3 col-sm-6">
-                            <img src="<?php echo $entry['photo']; ?>" alt="<?php $entry['photo']; ?>" height="150">
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
-
-                            <h5>
-                                <?php echo $entry['rollno']; ?>
-                            </h5>
-                            <h5>
-                                <?php echo $entry['dept']; ?>
-                            </h5>
-                            <h6>
-                                <?php echo $entry['name']; ?>
-                            </h6>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
-                            <label for="remark<?php echo $entry["ID"]; ?>" class="form-label">Remarks</label>
-                            <p class="form-control">
-                                <?php
-                                if (strlen($entry['remarks']) == 0) {
-                                    echo ("none");
-                                } else {
-                                    echo ($entry['remarks']);
-                                }
-                                ?>
-                            </p>
-                        </div>
-                        <hr class="my-4">
-                    </div>
-                <?php }
-                echo "</ul>";
-            }
-
-            ?>
-
-        </div>
-    </div>
-
+        // Initial display of all students
+        filterStudents();
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

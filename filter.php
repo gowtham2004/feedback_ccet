@@ -40,9 +40,12 @@ session_start();
 
     <label for="searchInput">Search by Name:</label>
     <input type="text" id="searchInput" oninput="filterStudents()">
-
-    <div id="studentContainer">
-        <!-- Student entries will be dynamically added here -->
+    <div class="container">
+        <div class="row">
+            <div id="studentContainer">
+                <!-- Student entries will be dynamically added here -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -84,9 +87,31 @@ session_start();
 
                 // Add text content
                 studentEntry.innerHTML += `
-                
-          
-        `;
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-md-3 col-sm-6">
+                        <img src="${student.photo}" alt="${student.photo}" height="150">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+
+                        <h5>
+                        ${student.rollno}
+                        </h5>
+                        <h5>
+                        ${student.dept}
+                        </h5>
+                        <h6>
+                        ${student.name}
+                        </h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-3 align-self-center">
+                        <button class="btn btn-warning" data-bs-toggle="modal"
+                            data-bs-target="#modal${student.ID}">
+                            View Report
+                        </button>
+                    </div>
+                    <hr class="my-4">
+                </div>
+                `;
 
                 studentContainer.appendChild(studentEntry);
             });

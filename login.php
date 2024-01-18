@@ -19,7 +19,7 @@ if (isset($_SESSION["faculty_id"])) {
     <?php 
     include_once("navbar.php");
     ?>
-    <div class="container">
+    <div class="container" style="margin-top: 70px">
         <div class=" row justify-content-center">
             <div class="card mt-5 col-lg-4">
                 <div class="card-body">

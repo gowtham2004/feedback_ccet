@@ -29,7 +29,7 @@ if (isset($_SESSION["faculty_id"])) {
             </div>
         </nav> -->
 
-        <div class="container">
+        <div class="container" style="margin-top: 70px">
             <div class="row justify-content-center">
                 <h2 class="mt-3 mb-3 col-lg-5 text-center">Mentoring Feedback</h2>
                 <?php

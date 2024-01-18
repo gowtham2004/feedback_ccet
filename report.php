@@ -101,7 +101,7 @@ try {
 
 <body>
     <?php include_once("navbar.php"); ?>
-    <div class="container mt-5">
+    <div class="container" style="margin-top: 90px">
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="colored-box box-1">

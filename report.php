@@ -96,6 +96,26 @@ try {
             background-color: #2ecc71;
             /* Green */
         }
+
+        .input-icons i {
+            position: absolute;
+        }
+
+        .input-icons {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            padding: 10px;
+            min-width: 40px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -151,12 +171,13 @@ try {
             <h2 class="text-center">Students</h2>
 
             <div class="row justify-content-end">
-                
+
                 <div class="col-3">
                     <label for="searchInput" class="form-label">Search by Name:</label>
-                    <input type="text" id="searchInput" class="form-control"
-                        placeholder="<i class='fa fa-search'></i> Search" oninput="filterStudents()">
-
+                    <div class="input-icons">
+                        <i class="fa fa-search icon"></i>
+                        <input type="text" id="searchInput" class="form-control input-field" placeholder="Search" oninput="filterStudents()">
+                    </div>
                 </div>
 
             </div>

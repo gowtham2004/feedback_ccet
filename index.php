@@ -3,6 +3,35 @@ session_start();
 include_once("config.php");
 
 if (isset($_SESSION["faculty_id"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        try {
+            $staffid = $_SESSION["faculty_id"];
+            $stmt = $dbh->prepare("SELECT * FROM student where mentorid=:mentorid");
+            $stmt->bindParam(':mentorid', $_SESSION["faculty_id"]);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($result) {
+                foreach ($result as $row) {
+                    $studentid = $row["ID"];
+                    if(isset($_POST["remark" . $row["ID"]])){
+                        $remarks = $_POST["remark" . $row["ID"]];
+                        $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
+                        $stmt->bindParam(':studentid', $studentid);
+                        $stmt->bindParam(':staffid', $staffid);
+                        $stmt->bindParam(':remarks', $remarks);
+                        $stmt->execute();
+                        echo "<script>alert('Feedback added.');window.location.href = 'index.php';</script>";
+                    }
+                    
+                }
+            } else {
+                echo "error occurred on writing data";
+            }
+        }
+        catch (PDOException $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
     ?>
 
     <!doctype html>
@@ -50,7 +79,7 @@ if (isset($_SESSION["faculty_id"])) {
                     foreach ($students as $student) {
                         ?>
                         <div class="student-info" id="student<?php echo $student['ID']; ?>" style="display: none;">
-                            <form action="">
+                            <form method="post">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-2 col-md-3 col-sm-6 align-self-center">
                                         <img src="<?php echo $student['photo']; ?>" alt="<?php $student['photo']; ?>" height="150">

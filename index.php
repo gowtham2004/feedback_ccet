@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("config.php");
+$selectedDate = "";
 
 if (isset($_SESSION["faculty_id"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -14,13 +15,25 @@ if (isset($_SESSION["faculty_id"])) {
                 foreach ($result as $row) {
                     $studentid = $row["ID"];
                     if (isset($_POST["remark" . $row["ID"]])) {
-                        $remarks = $_POST["remark" . $row["ID"]];
-                        $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
-                        $stmt->bindParam(':studentid', $studentid);
-                        $stmt->bindParam(':staffid', $staffid);
-                        $stmt->bindParam(':remarks', $remarks);
-                        $stmt->execute();
-                        echo "<script>alert('Feedback added.');window.location.href = 'index.php';</script>";
+
+                        $currentDate = date('Y-m-d');
+                        $stmtCheckFeedback = $dbh->prepare("SELECT * FROM feedback WHERE studentid = :studentid AND staffid = :staffid AND DATE(insertat) = :currentDate");
+                        $stmtCheckFeedback->bindParam(':studentid', $studentid);
+                        $stmtCheckFeedback->bindParam(':staffid', $staffid);
+                        $stmtCheckFeedback->bindParam(':currentDate', $currentDate);
+                        $stmtCheckFeedback->execute();
+                        if ($stmtCheckFeedback->rowCount() > 0) {
+                            $success = 0;
+                        } else {
+                            $remarks = $_POST["remark" . $row["ID"]];
+                            $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
+                            $stmt->bindParam(':studentid', $studentid);
+                            $stmt->bindParam(':staffid', $staffid);
+                            $stmt->bindParam(':remarks', $remarks);
+                            $stmt->execute();
+                            $success = 1;
+                        }
+
                     }
 
                 }
@@ -61,8 +74,30 @@ if (isset($_SESSION["faculty_id"])) {
                 $stmt->execute();
                 // $timetable = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $isMentoringSessionDay = $stmt->rowCount() > 0;
-                echo $isMentoringSessionDay;
                 ?>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 col-sm-8 mb-3" id="alert_msg">
+                        <?php if (isset($success)) {
+                            if ($success == 1) {
+                                ?>
+                                <div class="alert alert-success d-flex align-items-center" role="alert">
+                                    <div>
+                                        <i class="fa fa-check-circle"></i> Feedback added
+                                    </div>
+                                </div>
+                            <?php }
+                            else{
+                                ?>
+                                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                    <div>
+                                        <i class="fa fa-warning"></i> Feedback already exists
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        } ?>
+                    </div>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-6 col-sm-8 mb-3">
                         <label for="dateselect" class="form-label">Select Date:</label>
@@ -71,7 +106,11 @@ if (isset($_SESSION["faculty_id"])) {
                             if ($isMentoringSessionDay) {
                                 $currentDate = date('d-m-Y');
                                 echo '<option value="" selected disabled>Select Date</option>';
-                                echo "<option value='{$currentDate}'>{$currentDate}</option>";
+                                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                    echo "<option value='{$currentDate}' selected>{$currentDate}</option>";
+                                } else {
+                                    echo "<option value='{$currentDate}'>{$currentDate}</option>";
+                                }
                             } else {
                                 echo "<option value='' selected disabled>No Dates Available</option>";
                             }
@@ -91,7 +130,11 @@ if (isset($_SESSION["faculty_id"])) {
 
                     if ($students) {
                         ?>
-                        <div id="studentsselection" style="display: none;">
+                        <div id="studentsselection" <?php
+                        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+                            echo 'style="display: none;"';
+                        }
+                        ?>>
                             <div class="row justify-content-center">
                                 <div class="col-lg-4 col-md-6 col-sm-8 mb-3">
                                     <label for="studentSelect" class="form-label">Select Student:</label>

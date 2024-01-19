@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `remarks` text,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
--- Dumping data for table feedback.feedback: 9 rows
+-- Dumping data for table feedback.feedback: 18 rows
 /*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
 REPLACE INTO `feedback` (`ID`, `studentid`, `staffid`, `insertat`, `remarks`) VALUES
 	(1, 3, 3, '2024-01-11 06:26:08', 'trtUKYVKGVKHJJhvkusvuyg7x6tuyxv'),
@@ -40,15 +40,24 @@ REPLACE INTO `feedback` (`ID`, `studentid`, `staffid`, `insertat`, `remarks`) VA
 	(6, 6, 3, '2024-01-10 18:07:47', 'newiugufoihouvb'),
 	(7, 3, 3, '2024-01-18 05:49:39', 'ldhhjaebejhbahldb'),
 	(8, 4, 3, '2024-01-18 05:49:39', 'ohiubkje vur5viuiuerf kjbu787488999888....,?ewefkjewbfuhigyug7'),
-	(9, 6, 3, '2024-01-18 05:49:39', 'fuiwiufuiewfuewehfuiewhf 48veugy uibjk kjfyubejehj ..rrurvbru');
+	(9, 6, 3, '2024-01-18 05:49:39', 'fuiwiufuiewfuewehfuiewhf 48veugy uibjk kjfyubejehj ..rrurvbru'),
+	(10, 3, 3, '2024-01-18 09:54:01', NULL),
+	(11, 4, 3, '2024-01-18 09:54:01', NULL),
+	(12, 6, 3, '2024-01-18 09:54:01', NULL),
+	(13, 3, 3, '2024-01-18 09:54:38', NULL),
+	(14, 4, 3, '2024-01-18 09:54:38', NULL),
+	(15, 6, 3, '2024-01-18 09:54:38', NULL),
+	(22, 4, 3, '2024-01-19 08:12:08', 'srdfgvhibih'),
+	(21, 3, 3, '2024-01-19 08:11:51', '2rfghjk'),
+	(23, 6, 3, '2024-01-19 08:12:14', 'tdugvukgv');
 /*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 
 -- Dumping structure for table feedback.staff
 CREATE TABLE IF NOT EXISTS `staff` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(200) NOT NULL DEFAULT '$2y$10$nOP3MM04pvirwJwN.F.2KuhYfOikJQxWuXtZtX2F5nxR9dAdcecfy',
+  `password` varchar(200) NOT NULL,
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `username` (`username`)
@@ -61,6 +70,42 @@ REPLACE INTO `staff` (`ID`, `name`, `username`, `password`, `insertat`) VALUES
 	(2, 'maria james', 'mariajames', '$2y$10$nOP3MM04pvirwJwN.F.2KuhYfOikJQxWuXtZtX2F5nxR9dAdcecfy', '2024-01-10 08:56:13'),
 	(3, 'mathew', 'mathew', '$2y$10$nOP3MM04pvirwJwN.F.2KuhYfOikJQxWuXtZtX2F5nxR9dAdcecfy', '2024-01-10 08:56:23');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
+
+-- Dumping structure for table feedback.staff_timetable
+CREATE TABLE IF NOT EXISTS `staff_timetable` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `staffid` int(11) NOT NULL,
+  `day` varchar(50) NOT NULL DEFAULT '',
+  `hr1` varchar(50) NOT NULL DEFAULT '',
+  `hr2` varchar(50) NOT NULL DEFAULT '',
+  `hr3` varchar(50) NOT NULL DEFAULT '',
+  `hr4` varchar(50) NOT NULL DEFAULT '',
+  `hr5` varchar(50) NOT NULL DEFAULT '',
+  `hr6` varchar(50) NOT NULL DEFAULT '',
+  `hr7` varchar(50) NOT NULL DEFAULT '',
+  `hr8` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table feedback.staff_timetable: 15 rows
+/*!40000 ALTER TABLE `staff_timetable` DISABLE KEYS */;
+REPLACE INTO `staff_timetable` (`ID`, `staffid`, `day`, `hr1`, `hr2`, `hr3`, `hr4`, `hr5`, `hr6`, `hr7`, `hr8`) VALUES
+	(1, 1, 'Mon', 'OS', 'CS', '', 'CD', '', 'AI', 'AM', 'SE'),
+	(2, 1, 'Tue', 'AI', 'SE', 'OS', 'CD', 'DB', 'TOC', 'CS', ''),
+	(3, 1, 'Wed', 'TOC', 'CD', 'DB', 'AI', 'OS', 'SE', 'CS', ''),
+	(4, 1, 'Thu', 'DB', 'CS', 'AI', '', 'SE', 'OS', 'CD', ''),
+	(5, 1, 'Fri', 'CD', 'TOC', 'AI', 'DB', 'CS', 'SE', '', ''),
+	(6, 2, 'Mon', '', '', 'AI', 'OS', 'SE', 'TOC', 'CD', ''),
+	(7, 2, 'Tue', '', '', 'DB', 'AI', 'AM', 'TOC', '', 'CD'),
+	(8, 2, 'Wed', '', 'CS', 'DB', '', 'AI', 'SE', '', 'CS'),
+	(9, 2, 'Thu', '', 'CS', 'AI', 'TOC', '', 'OS', '', ''),
+	(10, 2, 'Fri', '', '', '', 'DB', 'CS', 'SE', 'OS', ''),
+	(11, 3, 'Mon', 'AI', 'DB', '', '', 'SE', 'TOC', 'CD', 'OS'),
+	(12, 3, 'Tue', '', 'OS', '', 'DB', 'CS', 'SE', 'AI', ''),
+	(13, 3, 'Wed', '', 'CS', 'DB', 'AI', 'SE', '', 'TOC', ''),
+	(14, 3, 'Thu', '', 'CS', 'AI', 'TOC', '', 'OS', '', 'CD'),
+	(15, 3, 'Fri', '', 'TOC', 'AI', 'DB', 'CS', 'AM', 'OS', '');
+/*!40000 ALTER TABLE `staff_timetable` ENABLE KEYS */;
 
 -- Dumping structure for table feedback.student
 CREATE TABLE IF NOT EXISTS `student` (

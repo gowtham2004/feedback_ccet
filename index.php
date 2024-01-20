@@ -13,8 +13,8 @@ if (isset($_SESSION["faculty_id"])) {
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($result) {
                 foreach ($result as $row) {
-                    $studentid = $row["ID"];
-                    if (isset($_POST["remark" . $row["ID"]])) {
+                    $studentid = $row["id"];
+                    if (isset($_POST["remark" . $row["id"]])) {
 
                         $currentDate = date('Y-m-d');
                         $stmtCheckFeedback = $dbh->prepare("SELECT * FROM feedback WHERE studentid = :studentid AND staffid = :staffid AND DATE(insertat) = :currentDate");
@@ -25,7 +25,7 @@ if (isset($_SESSION["faculty_id"])) {
                         if ($stmtCheckFeedback->rowCount() > 0) {
                             $success = 0;
                         } else {
-                            $remarks = $_POST["remark" . $row["ID"]];
+                            $remarks = $_POST["remark" . $row["id"]];
                             $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
                             $stmt->bindParam(':studentid', $studentid);
                             $stmt->bindParam(':staffid', $staffid);
@@ -143,7 +143,7 @@ if (isset($_SESSION["faculty_id"])) {
                                         <option value="" selected disabled>Select Student</option>
                                         <?php
                                         foreach ($students as $student) {
-                                            echo "<option value='{$student['ID']}'>{$student['rollno']} - {$student['name']}</option>";
+                                            echo "<option value='{$student['id']}'>{$student['regno']} - {$student['name']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -153,7 +153,7 @@ if (isset($_SESSION["faculty_id"])) {
                         <?php
                         foreach ($students as $student) {
                             ?>
-                            <div class="student-info" id="student<?php echo $student['ID']; ?>" style="display: none;">
+                            <div class="student-info" id="student<?php echo $student['id']; ?>" style="display: none;">
                                 <form method="post">
                                     <div class="row justify-content-center">
                                         <div class="col-lg-2 col-md-3 col-sm-6 align-self-center">
@@ -161,7 +161,7 @@ if (isset($_SESSION["faculty_id"])) {
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
                                             <h5>
-                                                <?php echo $student['rollno']; ?>
+                                                <?php echo $student['regno']; ?>
                                             </h5>
                                             <h5>
                                                 <?php echo $student['dept']; ?>
@@ -171,8 +171,8 @@ if (isset($_SESSION["faculty_id"])) {
                                             </h6>
                                         </div>
                                         <div class="col-lg-3 col-md-4 col-sm-10 align-self-center">
-                                            <label for="remark<?php echo $student["ID"]; ?>" class="form-label">Remarks</label>
-                                            <textarea class="form-control" rows=3 name="remark<?php echo $student["ID"]; ?>"
+                                            <label for="remark<?php echo $student["id"]; ?>" class="form-label">Remarks</label>
+                                            <textarea class="form-control" rows=3 name="remark<?php echo $student["id"]; ?>"
                                                 placeholder="Remarks" oninput="validateInput(this)"></textarea>
                                         </div>
                                         <!-- <hr class="my-4"> -->

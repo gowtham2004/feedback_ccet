@@ -8,7 +8,7 @@ try {
     // Replace 'your_table', 'feedback.insertat', and other placeholders with your actual table and column names
     $sql = "SELECT DISTINCT DATE(feedback.insertat) as date
             FROM feedback
-            INNER JOIN student ON student.ID = feedback.studentid
+            INNER JOIN student ON student.id = feedback.studentid
             WHERE feedback.staffid = :mentorid
             ORDER BY date DESC";
 
@@ -25,9 +25,9 @@ try {
     $totalMentoringSessions = $stmt->rowCount();
 
     // Fetch all entries regardless of the date
-    $sqlAllEntries = "SELECT student.id as ID, student.photo as photo, student.rollno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
+    $sqlAllEntries = "SELECT student.id as ID, student.photo as photo, student.regno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
                     FROM feedback
-                    INNER JOIN student ON student.ID = feedback.studentid
+                    INNER JOIN student ON student.id = feedback.studentid
                     WHERE feedback.staffid = :mentorid
                     ORDER BY feedback.insertat DESC";
 
@@ -206,7 +206,6 @@ try {
             </form>
             <script>
                 function submitform() {
-                    console.log("wrkng");
                     document.getElementById("selectstudent").submit();
                 }
             </script>
@@ -223,7 +222,7 @@ try {
                             echo ('<h1>Please select any student</h1>');
                         } else {
                             // Fetch entries based on the selected date and search student name
-                            $sql = "SELECT * FROM student WHERE mentorid=:mentorid AND ID=:studid";
+                            $sql = "SELECT * FROM student WHERE mentorid=:mentorid AND id=:studid";
 
                             $stmt = $dbh->prepare($sql);
                             $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
@@ -242,7 +241,7 @@ try {
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
                                             <h5>
-                                                <?php echo ($row['rollno']); ?>
+                                                <?php echo ($row['regno']); ?>
                                             </h5>
                                             <h5>
                                                 <?php echo ($row['dept']); ?>
@@ -253,7 +252,7 @@ try {
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-3 align-self-center">
                                             <button class="btn btn-warning" data-bs-toggle="modal"
-                                                data-bs-target="#modal<?php echo ($row['ID']); ?>">
+                                                data-bs-target="#modal<?php echo ($row['id']); ?>">
                                                 View Report
                                             </button>
                                         </div>
@@ -268,7 +267,7 @@ try {
                                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     foreach ($result as $row) {
                                         ?>
-                                        <div class="modal fade" id="modal<?php echo $row["ID"]; ?>" tabindex="-1">
+                                        <div class="modal fade" id="modal<?php echo $row["id"]; ?>" tabindex="-1">
                                             <div class="modal-dialog modal-dialog-centered modal-xl">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -288,7 +287,7 @@ try {
                                                                     </div>
                                                                     <div class="col-3 justify-content-center align-self-center">
                                                                         <h5>
-                                                                            <?php echo $row['rollno']; ?>
+                                                                            <?php echo $row['regno']; ?>
                                                                         </h5>
                                                                         <h5>
                                                                             <?php echo $row['dept']; ?>
@@ -306,7 +305,7 @@ try {
 
                                                                 $q = "SELECT * FROM feedback WHERE studentid=:id";
                                                                 $stmt = $dbh->prepare($q);
-                                                                $stmt->bindParam(':id', $row["ID"], PDO::PARAM_INT);
+                                                                $stmt->bindParam(':id', $row["id"], PDO::PARAM_INT);
                                                                 $stmt->execute();
                                                                 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                                 foreach ($res as $r) {

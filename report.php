@@ -77,7 +77,9 @@ try {
     <title>Feedback Entries</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">4
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     <style>
         ul {
@@ -185,20 +187,29 @@ try {
             </div>
         </div>
         <div class="container mt-3">
-            <form action="" method="post">
-                <div class="mb-3">
-                    <label for="selectedStudentID" class="form-label">Select a Student:</label>
-                    <select name="selectedStudentID" id="selectedStudentID" class="form-select">
-                        <option value="0">Select student</option>
-                        <?php foreach ($Names as $row): ?>
-                            <option value="<?php echo ($IDmap[$row]); ?>">
-                                <?php echo ($row); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+            <form action="" method="post" id="selectstudent">
+                <div class="row justify-content-center mt-3">
+                    <div class="col-lg-4 col-md-6 col-sm-8 mb-3">
+                        <label for="selectedStudentID" class="form-label">Select a Student:</label>
+                        <select name="selectedStudentID" id="selectedStudentID" class="form-select"
+                            onchange="submitform()">
+                            <option value="0">Select student</option>
+                            <?php foreach ($Names as $row): ?>
+                                <option value="<?php echo ($IDmap[$row]); ?>">
+                                    <?php echo ($row); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">Show Entries</button>
+                <!-- <button type="submit" name="submit" class="btn btn-primary">Show Entries</button> -->
             </form>
+            <script>
+                function submitform() {
+                    console.log("wrkng");
+                    document.getElementById("selectstudent").submit();
+                }
+            </script>
 
             <div class="container">
                 <div class="row">
@@ -206,7 +217,7 @@ try {
                         <!-- Student entries will be dynamically added here -->
                     </div>
                     <?php
-                    if (isset($_POST["submit"])) {
+                    if (isset($_POST["selectedStudentID"])) {
                         $studentid = isset($_POST['selectedStudentID']) ? $_POST['selectedStudentID'] : '';
                         if ($studentid == 0) {
                             echo ('<h1>Please select any student</h1>');

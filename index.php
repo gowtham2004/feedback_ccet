@@ -2,13 +2,18 @@
 session_start();
 include_once("config.php");
 $selectedDate = "";
+$facultyId = $_SESSION["faculty_id"];
+$stmt = $dbh->prepare("SELECT id FROM staff where faculty_id=:faculty_id");
+$stmt->bindParam(':faculty_id', $facultyId); // Use $staffid instead of $_SESSION["faculty_id"]
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$staffid = $result['id'];
 
 if (isset($_SESSION["faculty_id"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
-            $staffid = $_SESSION["faculty_id"];
-            $stmt = $dbh->prepare("SELECT * FROM student where councellor=:councellor");
-            $stmt->bindParam(':councellor', $_SESSION["faculty_id"]);
+            $stmt = $dbh->prepare("SELECT * FROM student where councellor=:faculty_id");
+            $stmt->bindParam(':faculty_id', $facultyId);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($result) {
@@ -19,19 +24,24 @@ if (isset($_SESSION["faculty_id"])) {
                         $currentDate = date('Y-m-d');
                         $stmtCheckFeedback = $dbh->prepare("SELECT * FROM feedback WHERE studentid = :studentid AND staffid = :staffid AND DATE(insertat) = :currentDate");
                         $stmtCheckFeedback->bindParam(':studentid', $studentid);
-                        $stmtCheckFeedback->bindParam(':staffid', $staffid);
+                        $stmtCheckFeedback->bindParam(':staffid', $facultyId);
                         $stmtCheckFeedback->bindParam(':currentDate', $currentDate);
                         $stmtCheckFeedback->execute();
                         if ($stmtCheckFeedback->rowCount() > 0) {
                             $success = 0;
                         } else {
                             $remarks = $_POST["remark" . $row["id"]];
-                            $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
-                            $stmt->bindParam(':studentid', $studentid);
-                            $stmt->bindParam(':staffid', $staffid);
-                            $stmt->bindParam(':remarks', $remarks);
-                            $stmt->execute();
-                            $success = 1;
+                            if ($remarks != '') {
+                                $stmt = $dbh->prepare("INSERT INTO feedback (studentid, staffid, remarks) VALUES (:studentid, :staffid, :remarks)");
+                                $stmt->bindParam(':studentid', $studentid);
+                                $stmt->bindParam(':staffid', $facultyId);
+                                $stmt->bindParam(':remarks', $remarks);
+                                $stmt->execute();
+                                $success = 1;
+                            } else {
+                                $success = 2;
+                            }
+
                         }
 
                     }
@@ -67,9 +77,8 @@ if (isset($_SESSION["faculty_id"])) {
 
                 <?php
                 $currentDay = date('D');
-                $facultyId = $_SESSION["faculty_id"];
-                $stmt = $dbh->prepare("SELECT * FROM staff_timetable WHERE staffid = :facultyId AND day = :currentDay AND ('AM' IN (hr1, hr2, hr3, hr4, hr5, hr6, hr7, hr8))");
-                $stmt->bindParam(':facultyId', $facultyId);
+                $stmt = $dbh->prepare("SELECT * FROM staff_timetable WHERE staffid = :staffid AND day = :currentDay AND ('AM' IN (hr1, hr2, hr3, hr4, hr5, hr6, hr7, hr8))");
+                $stmt->bindParam(':staffid', $staffid);
                 $stmt->bindParam(':currentDay', $currentDay);
                 $stmt->execute();
                 // $timetable = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -80,19 +89,29 @@ if (isset($_SESSION["faculty_id"])) {
                         <?php if (isset($success)) {
                             if ($success == 1) {
                                 ?>
-                                <div class="alert alert-success d-flex align-items-center" role="alert">
+                                <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
                                     <div>
                                         <i class="fa fa-check-circle"></i> Feedback added
                                     </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            <?php }
-                            else{
+                            <?php } else if ($success == 0) {
                                 ?>
-                                <div class="alert alert-warning d-flex align-items-center" role="alert">
-                                    <div>
-                                        <i class="fa fa-warning"></i> Feedback already exists
+                                    <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                                        <div>
+                                            <i class="fa fa-warning"></i> Feedback already exists
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
-                                </div>
+                                <?php
+                            } else {
+                                ?>
+                                    <div class="alert alert-warning alert-dismissible d-flex align-items-center" role="alert">
+                                        <div>
+                                            <i class="fa fa-warning"></i> Remark shouldn't be empty
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
                                 <?php
                             }
                         } ?>
@@ -123,8 +142,8 @@ if (isset($_SESSION["faculty_id"])) {
                 if ($isMentoringSessionDay) {
 
                     // Fetch all students for the faculty
-                    $stmt = $dbh->prepare("SELECT * FROM student WHERE councellor=:councellor");
-                    $stmt->bindParam(':councellor', $_SESSION["faculty_id"]);
+                    $stmt = $dbh->prepare("SELECT * FROM student WHERE councellor=:facultyid");
+                    $stmt->bindParam(':facultyid', $facultyId);
                     $stmt->execute();
                     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

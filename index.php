@@ -7,8 +7,8 @@ if (isset($_SESSION["faculty_id"])) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $staffid = $_SESSION["faculty_id"];
-            $stmt = $dbh->prepare("SELECT * FROM student where mentorid=:mentorid");
-            $stmt->bindParam(':mentorid', $_SESSION["faculty_id"]);
+            $stmt = $dbh->prepare("SELECT * FROM student where councellor=:councellor");
+            $stmt->bindParam(':councellor', $_SESSION["faculty_id"]);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if ($result) {
@@ -123,8 +123,8 @@ if (isset($_SESSION["faculty_id"])) {
                 if ($isMentoringSessionDay) {
 
                     // Fetch all students for the faculty
-                    $stmt = $dbh->prepare("SELECT * FROM student WHERE mentorid=:mentorid");
-                    $stmt->bindParam(':mentorid', $_SESSION["faculty_id"]);
+                    $stmt = $dbh->prepare("SELECT * FROM student WHERE councellor=:councellor");
+                    $stmt->bindParam(':councellor', $_SESSION["faculty_id"]);
                     $stmt->execute();
                     $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

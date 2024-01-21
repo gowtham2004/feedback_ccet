@@ -9,15 +9,15 @@ try {
     $sql = "SELECT DISTINCT DATE(feedback.insertat) as date
             FROM feedback
             INNER JOIN student ON student.id = feedback.studentid
-            WHERE feedback.staffid = :mentorid
+            WHERE feedback.staffid = :councellor
             ORDER BY date DESC";
 
-    // Replace $_SESSION["faculty_id"] with the appropriate variable or value for :mentorid
-    $mentorId = $_SESSION["faculty_id"];
+    // Replace $_SESSION["faculty_id"] with the appropriate variable or value for :councellor
+    $councellor = $_SESSION["faculty_id"];
 
     // Prepare and execute the query
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+    $stmt->bindParam(':councellor', $councellor, PDO::PARAM_INT);
     $stmt->execute();
 
     // Fetch the available dates
@@ -28,11 +28,11 @@ try {
     $sqlAllEntries = "SELECT student.id as ID, student.photo as photo, student.regno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
                     FROM feedback
                     INNER JOIN student ON student.id = feedback.studentid
-                    WHERE feedback.staffid = :mentorid
+                    WHERE feedback.staffid = :councellor
                     ORDER BY feedback.insertat DESC";
 
     $stmtAllEntries = $dbh->prepare($sqlAllEntries);
-    $stmtAllEntries->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+    $stmtAllEntries->bindParam(':councellor', $councellor, PDO::PARAM_INT);
     $stmtAllEntries->execute();
 
     // Fetch all entries
@@ -45,10 +45,9 @@ try {
         $groupedAllEntries[$date][] = $entry;
     }
 
-    $sqlAllEntries = "SELECT name,id FROM student WHERE mentorid=:mentorid";
-
+    $sqlAllEntries = "SELECT name,id FROM student WHERE councellor=:councellor";
     $stmtAllEntries = $dbh->prepare($sqlAllEntries);
-    $stmtAllEntries->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+    $stmtAllEntries->bindParam(':councellor', $councellor, PDO::PARAM_STR);
     $stmtAllEntries->execute();
 
     // Fetch all entries
@@ -59,6 +58,7 @@ try {
     $Names = [];
     foreach ($allEntries as $entry) {
         array_push($Names, $entry['name']);
+        $name = $entry['name'];
         $IDmap[$entry['name']] = $entry['id'];
     }
 
@@ -148,8 +148,9 @@ try {
                     <br>
                     <?php
                     $staffid = $_SESSION['faculty_id'];
-                    $sql = "SELECT * FROM student WHERE mentorid = $staffid";
+                    $sql = "SELECT * FROM student WHERE councellor=:councellor";
                     $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':councellor',$staffid, PDO::PARAM_STR);
                     $stmt->execute();
                     echo ($stmt->rowCount());
                     ?>
@@ -175,8 +176,9 @@ try {
                     <br>
                     <?php
                     $staffid = $_SESSION['faculty_id'];
-                    $sql = "SELECT insertat FROM feedback WHERE staffid = $staffid ORDER BY insertat DESC limit 1";
+                    $sql = "SELECT insertat FROM feedback WHERE staffid=:staffid ORDER BY insertat DESC limit 1";
                     $stmt = $dbh->prepare($sql);
+                    $stmt->bindParam(':staffid', $staffid);
                     $stmt->execute();
                     $result = $stmt->fetchColumn();
                     $timestamp = strtotime($result);
@@ -222,10 +224,10 @@ try {
                             echo ('<h1>Please select any student</h1>');
                         } else {
                             // Fetch entries based on the selected date and search student name
-                            $sql = "SELECT * FROM student WHERE mentorid=:mentorid AND id=:studid";
+                            $sql = "SELECT * FROM student WHERE councellor=:councellor AND id=:studid";
 
                             $stmt = $dbh->prepare($sql);
-                            $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+                            $stmt->bindParam(':councellor', $councellor, PDO::PARAM_INT);
                             $stmt->bindParam(':studid', $studentid, PDO::PARAM_STR);
                             $stmt->execute();
                             if ($stmt->rowCount() == 0) {
@@ -235,32 +237,32 @@ try {
                                 $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($entries as $row) {
                                     ?>
-                                    <div class="row justify-content-center">
+                                    <div class="row gap-3">
                                         <div class="col-lg-3 col-md-3 col-sm-6">
                                             <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>" height="150">
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
+                                            <h2>Personal Details</h2>
                                             <h5>
-                                                <?php echo ($row['regno']); ?>
+                                                <strong>RegNo: </strong><?php echo ($row['regno']); ?>
                                             </h5>
                                             <h5>
-                                                <?php echo ($row['dept']); ?>
+                                                <strong>Dept: </strong><?php echo ($row['dept']); ?>
                                             </h5>
-                                            <h6>
-                                                <?php echo ($row['name']); ?>
-                                            </h6>
+                                            <h5>
+                                                <strong>Name: </strong><?php echo ($row['name']); ?>
+                                            </h5>
                                         </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 align-self-center">
+                                        <div class="col-lg-2 col-md-2 col-sm-3 align-self-center p-2 ms-auto">
                                             <button class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modal<?php echo ($row['id']); ?>">
                                                 View Report
                                             </button>
                                         </div>
-                                        <hr class="my-4">
                                     </div>
                                     <?php
                                     $id = $_SESSION['faculty_id'];
-                                    $sql = "SELECT * FROM student WHERE mentorid=:id";
+                                    $sql = "SELECT * FROM student WHERE councellor=:id";
                                     $stmt = $dbh->prepare($sql);
                                     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                                     $stmt->execute();
@@ -279,27 +281,27 @@ try {
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
-                                                            <div class="col-6" style="border-right: 1px solid #ddd;">
+                                                            <!-- <div class="col-6" style="border-right: 1px solid #ddd;">
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-4">
-                                                                        <img src="<?php echo $row['photo']; ?>"
-                                                                            alt="<?php $row['photo']; ?>" height="150">
+                                                                        <img src="<?php //echo $row['photo']; ?>"
+                                                                            alt="<?php //$row['photo']; ?>" height="150">
                                                                     </div>
                                                                     <div class="col-3 justify-content-center align-self-center">
                                                                         <h5>
-                                                                            <?php echo $row['regno']; ?>
+                                                                            <?php //echo $row['regno']; ?>
                                                                         </h5>
                                                                         <h5>
-                                                                            <?php echo $row['dept']; ?>
+                                                                            <?php //echo $row['dept']; ?>
                                                                         </h5>
                                                                         <h6>
-                                                                            <?php echo $row['name']; ?>
+                                                                            <?php //echo $row['name']; ?>
                                                                         </h6>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-6 overflow-y-auto" style="max-height:600px;">
-                                                                <h3 class="mb-3">Report</h3>
+                                                            </div> -->
+                                                            <div class="col-12 overflow-y-auto" style="max-height:600px;">
+                                                                <h3 class="mb-3 text-center">Report</h3>
 
                                                                 <?php
 
@@ -312,18 +314,19 @@ try {
                                                                     // echo "<h3>".$r["remarks"]."</h3>";
                                                                     ?>
                                                                     <div class="row">
-                                                                        <div class="col-4">
-                                                                            <h5>
+                                                                        <div class="col-8">
+                                                                            <h5><strong>
                                                                                 <?php
                                                                                 $dt = date('j M Y', strtotime($r["insertat"]));
                                                                                 echo $dt;
                                                                                 ?>
-                                                                            </h5>
+                                                                            </strong></h5>
                                                                         </div>
-                                                                        <div class="col-8">
+                                                                        <div class="col-12" style="text-indent: 30px;">
                                                                             <?php echo $r["remarks"]; ?>
-                                                                        </div>
+                                                                        </div>                                                                                                                            
                                                                         <hr class="my-1 mb-1">
+                                                                        <br>
                                                                     </div>
                                                                     <?php
                                                                 }

@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `photo` varchar(150) DEFAULT './student.jpg',
   `name` varchar(50) NOT NULL DEFAULT '0',
   `dept` varchar(50) NOT NULL DEFAULT '0',
-  `mentorid` int(11) NOT NULL DEFAULT '0',
+  `councellor` int(11) NOT NULL DEFAULT '0',
   `insertat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `initial` varchar(255) DEFAULT NULL,
   `u_name` varchar(255) DEFAULT NULL,
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`id`, `regno`, `photo`, `name`, `dept`, `mentorid`, `insertat`, `initial`, `u_name`, `apno`, `batch`, `section`, `year`, `sem`, `fname`, `focc`, `mname`, `sex`, `dob`, `comm`, `mobile`, `parentmob`, `email`, `tenm`, `twvm`, `twelthMark`, `cutofMark`, `ug`, `stay`, `bg`, `maorco`, `profile_photo`, `photo_old`, `ad1`, `ad2`, `ad3`, `ad4`, `ad5`, `lateral`, `country`, `cincharge`, `cin_uname`, `councellor`, `coun_uname`, `fg`, `status`, `dis_cont`, `tc`, `Adhar_No`) VALUES
+INSERT INTO `student` (`id`, `regno`, `photo`, `name`, `dept`, `councellor`, `insertat`, `initial`, `u_name`, `apno`, `batch`, `section`, `year`, `sem`, `fname`, `focc`, `mname`, `sex`, `dob`, `comm`, `mobile`, `parentmob`, `email`, `tenm`, `twvm`, `twelthMark`, `cutofMark`, `ug`, `stay`, `bg`, `maorco`, `profile_photo`, `photo_old`, `ad1`, `ad2`, `ad3`, `ad4`, `ad5`, `lateral`, `country`, `cincharge`, `cin_uname`, `councellor`, `coun_uname`, `fg`, `status`, `dis_cont`, `tc`, `Adhar_No`) VALUES
 (11, '21cs062', './student.jpg', 'justien', 'cse', 1, '2024-01-19 10:52:09', 'I', 'justien_username', 'A123', 'B', 'Section1', '2nd', '1st', 'John', 'Engineer', 'Mary', 'Male', '1990-01-01', 'General', '1234567890', '9876543210', 'justien@example.com', 'High School', 'Intermediate', '90%', '80%', 'B.Tech', 'Hostel', 'O+', 'Mathematics', './profile_photos/justien.jpg', './photos/justien.jpg', 'Address1', 'Address2', 'Address3', 'Address4', 'Address5', 'Lateral Entry', 'India', 'Counselor1', 'counselor1_username', 'CCET0001', 'dean1_username', 'Foreign', 'Active', 'No', 'Transfer Certificate', '123456789012'),
 (12, '21ee078', './student.jpg', 'robert', 'eee', 2, '2024-01-19 10:52:09', 'R', 'robert_username', 'A124', 'A', 'Section2', '3rd', '2nd', 'Michael', 'Technician', 'Sandra', 'Male', '1991-02-15', 'OBC', '2345678901', '8765432109', 'robert@example.com', 'High School', 'Intermediate', '85%', '75%', 'B.Tech', 'Day Scholar', 'AB-', 'Physics', './profile_photos/robert.jpg', './photos/robert.jpg', 'Address1', 'Address2', 'Address3', 'Address4', 'Address5', 'No', 'USA', 'Counselor2', 'counselor2_username', 'CCET0001', 'dean2_username', 'Indian', 'Inactive', 'Yes', 'Migration Certificate', '234567890123'),
 (13, '21cs067', './student.jpg', 'shabby', 'cse', 3, '2024-01-19 10:52:09', 'S', 'shabby_username', 'A125', 'C', 'Section1', '4th', '2nd', 'George', 'Scientist', 'Isabella', 'Female', '1992-05-20', 'SC', '3456789012', '7654321098', 'shabby@example.com', 'High School', 'Intermediate', '88%', '82%', 'B.Tech', 'Hostel', 'B+', 'Chemistry', './profile_photos/shabby.jpg', './photos/shabby.jpg', 'Address1', 'Address2', 'Address3', 'Address4', 'Address5', 'No', 'Australia', 'Counselor3', 'counselor3_username', 'CCET0001', 'dean3_username', 'Foreign', 'Active', 'No', 'Transfer Certificate', '345678901234'),

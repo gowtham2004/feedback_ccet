@@ -8,15 +8,15 @@ try {
     $sql = "SELECT DISTINCT DATE(feedback.insertat) as date
             FROM feedback
             INNER JOIN student ON student.ID = feedback.studentid
-            WHERE feedback.staffid = :mentorid
+            WHERE feedback.staffid = :councellor
             ORDER BY date DESC";
 
-    // Replace $_SESSION["faculty_id"] with the appropriate variable or value for :mentorid
-    $mentorId = $_SESSION["faculty_id"];
+    // Replace $_SESSION["faculty_id"] with the appropriate variable or value for :councellor
+    $councellor = $_SESSION["faculty_id"];
 
     // Prepare and execute the query
     $stmt = $dbh->prepare($sql);
-    $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+    $stmt->bindParam(':councellor', $councellor, PDO::PARAM_INT);
     $stmt->execute();
 
     // Fetch the available dates
@@ -26,11 +26,11 @@ try {
     $sqlAllEntries = "SELECT student.id as ID, student.photo as photo, student.rollno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
                     FROM feedback
                     INNER JOIN student ON student.ID = feedback.studentid
-                    WHERE feedback.staffid = :mentorid
+                    WHERE feedback.staffid = :councellor
                     ORDER BY feedback.insertat DESC";
 
     $stmtAllEntries = $dbh->prepare($sqlAllEntries);
-    $stmtAllEntries->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+    $stmtAllEntries->bindParam(':councellor', $councellor, PDO::PARAM_INT);
     $stmtAllEntries->execute();
 
     // Fetch all entries
@@ -106,7 +106,7 @@ try {
             $sql = "SELECT student.id as ID, student.photo as photo, student.rollno as rollno, student.dept as dept, student.name as name, feedback.remarks as remarks, feedback.insertat as insertat
                     FROM feedback
                     INNER JOIN student ON student.ID = feedback.studentid
-                    WHERE feedback.staffid = :mentorid
+                    WHERE feedback.staffid = :councellor
                     AND DATE(feedback.insertat) = :selectedDate
                     AND student.name LIKE :searchStudentName
                     ORDER BY feedback.insertat DESC";
@@ -125,7 +125,7 @@ try {
         }
 
         $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(':mentorid', $mentorId, PDO::PARAM_INT);
+        $stmt->bindParam(':councellor', $councellor, PDO::PARAM_INT);
         $stmt->bindParam(':selectedDate', $formattedDate, PDO::PARAM_STR);
         $stmt->bindValue(':searchStudentName', "%$searchStudentName%", PDO::PARAM_STR);
         $stmt->execute();

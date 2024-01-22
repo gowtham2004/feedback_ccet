@@ -150,7 +150,7 @@ try {
                     $staffid = $_SESSION['faculty_id'];
                     $sql = "SELECT * FROM student WHERE councellor=:councellor";
                     $stmt = $dbh->prepare($sql);
-                    $stmt->bindParam(':councellor',$staffid, PDO::PARAM_STR);
+                    $stmt->bindParam(':councellor', $staffid, PDO::PARAM_STR);
                     $stmt->execute();
                     echo ($stmt->rowCount());
                     ?>
@@ -237,23 +237,26 @@ try {
                                 $entries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 foreach ($entries as $row) {
                                     ?>
-                                    <div class="row gap-3">
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                    <div class="row justify-content-center mt-3">
+                                        <div class="col-lg-3 col-md-3 col-sm-4">
                                             <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>" height="150">
                                         </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-6 align-self-center">
-                                            <h2>Personal Details</h2>
-                                            <h5>
-                                                <strong>RegNo: </strong><?php echo ($row['regno']); ?>
-                                            </h5>
-                                            <h5>
-                                                <strong>Dept: </strong><?php echo ($row['dept']); ?>
-                                            </h5>
-                                            <h5>
-                                                <strong>Name: </strong><?php echo ($row['name']); ?>
-                                            </h5>
+                                        <div class="col-lg-3 col-md-3 col-sm-5 align-self-center">
+                                            <h3>Personal Details</h2>
+                                                <h5>
+                                                    <strong>RegNo: </strong>
+                                                    <?php echo ($row['regno']); ?>
+                                                </h5>
+                                                <h5>
+                                                    <strong>Dept: </strong>
+                                                    <?php echo ($row['dept']); ?>
+                                                </h5>
+                                                <h5>
+                                                    <strong>Name: </strong>
+                                                    <?php echo ($row['name']); ?>
+                                                </h5>
                                         </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-3 align-self-center p-2 ms-auto">
+                                        <div class="col-lg-2 col-md-2 col-sm-3 align-self-center">
                                             <button class="btn btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#modal<?php echo ($row['id']); ?>">
                                                 View Report
@@ -270,18 +273,17 @@ try {
                                     foreach ($result as $row) {
                                         ?>
                                         <div class="modal fade" id="modal<?php echo $row["id"]; ?>" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered modal-xl">
+                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                            <?php echo $row["name"]; ?>
+                                                            Report <?php // echo $row["name"]; ?>
                                                         </h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="row">
-                                                            <!-- <div class="col-6" style="border-right: 1px solid #ddd;">
+                                                        <!-- <div class="col-6" style="border-right: 1px solid #ddd;">
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-4">
                                                                         <img src="<?php //echo $row['photo']; ?>"
@@ -300,47 +302,35 @@ try {
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                            <div class="col-12 overflow-y-auto" style="max-height:600px;">
-                                                                <h3 class="mb-3 text-center">Report</h3>
-
-                                                                <?php
-
-                                                                $q = "SELECT * FROM feedback WHERE studentid=:id";
-                                                                $stmt = $dbh->prepare($q);
-                                                                $stmt->bindParam(':id', $row["id"], PDO::PARAM_INT);
-                                                                $stmt->execute();
-                                                                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                                                foreach ($res as $r) {
-                                                                    // echo "<h3>".$r["remarks"]."</h3>";
-                                                                    ?>
-                                                                    <div class="row">
-                                                                        <div class="col-8">
-                                                                            <h5><strong>
-                                                                                <?php
-                                                                                $dt = date('j M Y', strtotime($r["insertat"]));
-                                                                                echo $dt;
-                                                                                ?>
-                                                                            </strong></h5>
-                                                                        </div>
-                                                                        <div class="col-12" style="text-indent: 30px;">
-                                                                            <?php echo $r["remarks"]; ?>
-                                                                        </div>                                                                                                                            
-                                                                        <hr class="my-1 mb-1">
-                                                                        <br>
-                                                                    </div>
-                                                                    <?php
-                                                                }
-                                                                ?>
+                                                        <!-- <h3 class="mb-3 text-center">Report</h3> -->
+                                                        <?php
+                                                        $q = "SELECT * FROM feedback WHERE studentid=:id";
+                                                        $stmt = $dbh->prepare($q);
+                                                        $stmt->bindParam(':id', $row["id"], PDO::PARAM_INT);
+                                                        $stmt->execute();
+                                                        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                        foreach ($res as $r) {
+                                                            // echo "<h3>".$r["remarks"]."</h3>";
+                                                            ?>
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <h5><strong>
+                                                                            <?php
+                                                                            $dt = date('j M Y', strtotime($r["insertat"]));
+                                                                            echo $dt;
+                                                                            ?>
+                                                                        </strong></h5>
+                                                                </div>
+                                                                <div class="col-8" style="text-indent: 30px;">
+                                                                    <?php echo $r["remarks"]; ?>
+                                                                </div>
+                                                                <hr class="my-1 mb-1">
+                                                                <br>
                                                             </div>
-                                                        </div>
-
-
-
+                                                            <?php
+                                                        }
+                                                        ?>
                                                     </div>
-                                                    <!-- <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div> -->
                                                 </div>
                                             </div>
                                         </div>

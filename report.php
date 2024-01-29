@@ -238,7 +238,161 @@ try {
                                 foreach ($entries as $row) {
                                     ?>
                                     <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-3 col-md-3 col-sm-4">
+                                        <div class="card">
+                                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                            <div class="card-body">
+                                                <h5 class="card-title">Student Details</h5>
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>"
+                                                            height="150">
+                                                        <div >
+                                                            <h5>
+                                                                <strong>RegNo: </strong>
+                                                                <?php echo ($row['regno']); ?>
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Dept: </strong>
+                                                                <?php echo ($row['dept']); ?>
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Name: </strong>
+                                                                <?php echo ($row['name']); ?>
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>RegNo: </strong>
+                                                                <?php echo ($row['regno']); ?>
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Dept: </strong>
+                                                                <?php echo ($row['dept']); ?>
+                                                            </h5>
+                                                            <h5>
+                                                                <strong>Name: </strong>
+                                                                <?php echo ($row['name']); ?>
+                                                            </h5>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </h5>
+                                                        <h5>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </h5>
+                                                    </div>`
+                                                    <div class="col-2 align-self-center">
+                                                        <button class="btn btn-warning" data-bs-toggle="modal"
+                                                            data-bs-target="#modal<?php echo ($row['id']); ?>">
+                                                            View Report
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- <p class="card-text">Some quick example text to build on the card title and make up the
+                                                    bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- <div class="col-lg-3 col-md-3 col-sm-4">
                                             <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>" height="150">
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-5 align-self-center">
@@ -261,7 +415,7 @@ try {
                                                 data-bs-target="#modal<?php echo ($row['id']); ?>">
                                                 View Report
                                             </button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <?php
                                     $id = $_SESSION['faculty_id'];
@@ -277,7 +431,8 @@ try {
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                            Report <?php // echo $row["name"]; ?>
+                                                            Report
+                                                            <?php // echo $row["name"]; ?>
                                                         </h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>

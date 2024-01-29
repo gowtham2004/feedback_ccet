@@ -135,6 +135,19 @@ try {
             padding: 10px;
             text-align: center;
         }
+
+        .photo {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            /* Vertical spacing between rows */
+        }
     </style>
 </head>
 
@@ -238,161 +251,177 @@ try {
                                 foreach ($entries as $row) {
                                     ?>
                                     <div class="row justify-content-center mt-3">
-                                        <div class="card">
-                                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                                        <div class="card bg-light mb-5">
                                             <div class="card-body">
                                                 <h5 class="card-title">Student Details</h5>
                                                 <div class="row">
-                                                    <div class="col-3">
-                                                        <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>"
-                                                            height="150">
-                                                        <div >
-                                                            <h5>
-                                                                <strong>RegNo: </strong>
-                                                                <?php echo ($row['regno']); ?>
-                                                            </h5>
-                                                            <h5>
-                                                                <strong>Dept: </strong>
-                                                                <?php echo ($row['dept']); ?>
-                                                            </h5>
-                                                            <h5>
-                                                                <strong>Name: </strong>
-                                                                <?php echo ($row['name']); ?>
-                                                            </h5>
-                                                            <h5>
-                                                                <strong>RegNo: </strong>
-                                                                <?php echo ($row['regno']); ?>
-                                                            </h5>
-                                                            <h5>
-                                                                <strong>Dept: </strong>
-                                                                <?php echo ($row['dept']); ?>
-                                                            </h5>
-                                                            <h5>
-                                                                <strong>Name: </strong>
-                                                                <?php echo ($row['name']); ?>
-                                                            </h5>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <div class="m-4">
+                                                            <img src="<?php echo ($row['photo']); ?>"
+                                                                alt="<?php echo ($row['photo']); ?>" height="150"
+                                                                style="border-radius: 30%;">
                                                         </div>
-
-
+                                                        <p>
+                                                            <strong>RegNo: </strong>
+                                                            <?php echo ($row['regno']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Dept: </strong>
+                                                            <?php echo ($row['dept']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Name: </strong>
+                                                            <?php echo ($row['name']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>User Name: </strong>
+                                                            <?php echo ($row['u_name']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Admission No: </strong>
+                                                            <?php echo ($row['apno']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Batch: </strong>
+                                                            <?php echo ($row['batch']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>year: </strong>
+                                                            <?php echo ($row['year']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Aadhar No: </strong>
+                                                            <?php echo ($row['Adhar_No']); ?>
+                                                        </p>
                                                     </div>
-                                                    <div class="col-3">
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <p>
+                                                            <strong>Father Name: </strong>
+                                                            <?php echo ($row['fname']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Father Occupation: </strong>
+                                                            <?php echo ($row['focc']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Mother Name: </strong>
+                                                            <?php echo ($row['mname']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Gender: </strong>
+                                                            <?php echo ($row['sex']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Date Of Birth: </strong>
+                                                            <?php echo ($row['dob']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Blood Group: </strong>
+                                                            <?php echo ($row['bg']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Community: </strong>
+                                                            <?php echo ($row['comm']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Mobile No: </strong>
+                                                            <?php echo ($row['mobile']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Parent Mobile: </strong>
+                                                            <?php echo ($row['parentmob']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Email: </strong>
+                                                            <?php echo ($row['email']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>10th Mark: </strong>
+                                                            <?php echo ($row['tenm']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>12th Mark: </strong>
+                                                            <?php echo ($row['twvm']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Cut Off: </strong>
+                                                            <?php echo ($row['cutofMark']); ?>
+                                                        </p>
                                                     </div>
-                                                    <div class="col-3">
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>RegNo: </strong>
-                                                            <?php echo ($row['regno']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Dept: </strong>
-                                                            <?php echo ($row['dept']); ?>
-                                                        </h5>
-                                                        <h5>
-                                                            <strong>Name: </strong>
-                                                            <?php echo ($row['name']); ?>
-                                                        </h5>
-                                                    </div>`
-                                                    <div class="col-2 align-self-center">
+                                                    <div class="col-md-3 col-sm-6">
+                                                        <p>
+                                                            <strong>UG: </strong>
+                                                            <?php echo ($row['ug']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Stay: </strong>
+                                                            <?php echo ($row['stay']); ?>
+                                                        </p>
+
+                                                        <p>
+                                                            <strong>Maorco: </strong>
+                                                            <?php echo ($row['maorco']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Address Line 1: </strong>
+                                                            <?php echo ($row['ad1']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Address Line 2: </strong>
+                                                            <?php echo ($row['ad2']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Address Line 3: </strong>
+                                                            <?php echo ($row['ad3']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Address Line 4: </strong>
+                                                            <?php echo ($row['ad4']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Address Line 5: </strong>
+                                                            <?php echo ($row['ad5']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Class Incharge: </strong>
+                                                            <?php echo ($row['cincharge']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Councellor: </strong>
+                                                            <?php echo ($row['councellor']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>First Graduate: </strong>
+                                                            <?php echo ($row['fg']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Discontinue: </strong>
+                                                            <?php echo ($row['dis_cont']); ?>
+                                                        </p>
+                                                        <p>
+                                                            <strong>Transfer Certificate: </strong>
+                                                            <?php echo ($row['tc']); ?>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-3 col-sm-6 d-flex justify-content-center align-items-start">
                                                         <button class="btn btn-warning" data-bs-toggle="modal"
                                                             data-bs-target="#modal<?php echo ($row['id']); ?>">
                                                             View Report
                                                         </button>
                                                     </div>
                                                 </div>
-
-
-                                                <!-- <p class="card-text">Some quick example text to build on the card title and make up the
-                                                    bulk of the card's content.</p>
-                                                <a href="#" class="btn btn-primary">Go somewhere</a> -->
                                             </div>
                                         </div>
 
+                                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the
+                                                    bulk of the card's content.</p>
+                                                <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                                    </div>
+                                </div>
 
 
-                                        <!-- <div class="col-lg-3 col-md-3 col-sm-4">
+
+                                <!-- <div class="col-lg-3 col-md-3 col-sm-4">
                                             <img src="<?php echo ($row['photo']); ?>" alt="<?php echo ($row['photo']); ?>" height="150">
                                         </div>
                                         <div class="col-lg-3 col-md-3 col-sm-5 align-self-center">
@@ -416,29 +445,28 @@ try {
                                                 View Report
                                             </button>
                                         </div> -->
-                                    </div>
-                                    <?php
-                                    $id = $_SESSION['faculty_id'];
-                                    $sql = "SELECT * FROM student WHERE councellor=:id";
-                                    $stmt = $dbh->prepare($sql);
-                                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                                    $stmt->execute();
-                                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    foreach ($result as $row) {
-                                        ?>
-                                        <div class="modal fade" id="modal<?php echo $row["id"]; ?>" tabindex="-1">
-                                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                                            Report
-                                                            <?php // echo $row["name"]; ?>
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!-- <div class="col-6" style="border-right: 1px solid #ddd;">
+                            </div>
+                            <?php
+                            $id = $_SESSION['faculty_id'];
+                            $sql = "SELECT * FROM student WHERE councellor=:id";
+                            $stmt = $dbh->prepare($sql);
+                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                            $stmt->execute();
+                            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            foreach ($result as $row) {
+                                ?>
+                                <div class="modal fade" id="modal<?php echo $row["id"]; ?>" tabindex="-1">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    Report
+                                                    <?php // echo $row["name"]; ?>
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- <div class="col-6" style="border-right: 1px solid #ddd;">
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-4">
                                                                         <img src="<?php //echo $row['photo']; ?>"
@@ -457,50 +485,50 @@ try {
                                                                     </div>
                                                                 </div>
                                                             </div> -->
-                                                        <!-- <h3 class="mb-3 text-center">Report</h3> -->
-                                                        <?php
-                                                        $q = "SELECT * FROM feedback WHERE studentid=:id";
-                                                        $stmt = $dbh->prepare($q);
-                                                        $stmt->bindParam(':id', $row["id"], PDO::PARAM_INT);
-                                                        $stmt->execute();
-                                                        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                                        foreach ($res as $r) {
-                                                            // echo "<h3>".$r["remarks"]."</h3>";
-                                                            ?>
-                                                            <div class="row">
-                                                                <div class="col-4">
-                                                                    <h5><strong>
-                                                                            <?php
-                                                                            $dt = date('j M Y', strtotime($r["insertat"]));
-                                                                            echo $dt;
-                                                                            ?>
-                                                                        </strong></h5>
-                                                                </div>
-                                                                <div class="col-8" style="text-indent: 30px;">
-                                                                    <?php echo $r["remarks"]; ?>
-                                                                </div>
-                                                                <hr class="my-1 mb-1">
-                                                                <br>
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                        ?>
+                                                <!-- <h3 class="mb-3 text-center">Report</h3> -->
+                                                <?php
+                                                $q = "SELECT * FROM feedback WHERE studentid=:id";
+                                                $stmt = $dbh->prepare($q);
+                                                $stmt->bindParam(':id', $row["id"], PDO::PARAM_INT);
+                                                $stmt->execute();
+                                                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($res as $r) {
+                                                    // echo "<h3>".$r["remarks"]."</h3>";
+                                                    ?>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <h5><strong>
+                                                                    <?php
+                                                                    $dt = date('j M Y', strtotime($r["insertat"]));
+                                                                    echo $dt;
+                                                                    ?>
+                                                                </strong></h5>
+                                                        </div>
+                                                        <div class="col-8" style="text-indent: 30px;">
+                                                            <?php echo $r["remarks"]; ?>
+                                                        </div>
+                                                        <hr class="my-1 mb-1">
+                                                        <br>
                                                     </div>
-                                                </div>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
-                                    <?php }
+                                    </div>
+                                </div>
+                            <?php }
                                 }
                             }
                         }
                     } ?>
-                </div>
-            </div>
         </div>
+    </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 
 </body>
 
